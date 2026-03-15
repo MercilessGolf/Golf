@@ -2,170 +2,113 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stretching</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Golf Drill Library - Stretching</title>
 <style>
-
-body{
-font-family:Arial, sans-serif;
-background:#f4f4f4;
-margin:0;
-padding:20px;
-}
-
-/* NAVIGATION */
-
-.navbar{
-text-align:center;
-margin-bottom:25px;
-}
-
-.navbtn{
-display:inline-block;
-padding:10px 22px;
-margin:6px;
-background:#2c7be5;
-color:white;
-text-decoration:none;
-border-radius:6px;
-font-weight:bold;
-font-size:14px;
-}
-
-.navbtn:hover{
-background:#1a5fc2;
-}
-
-h1{
-text-align:center;
-margin-bottom:40px;
-}
-
-/* SECTIONS */
-
-.section{
-margin-bottom:50px;
-}
-
-.section-title{
-font-size:26px;
-border-bottom:3px solid #ddd;
-padding-bottom:8px;
-margin-bottom:20px;
-}
-
-/* GRID */
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:20px;
-}
-
-.card{
-text-align:center;
-}
-
-.card img{
-width:200px;
-height:350px;
-object-fit:cover;
-border-radius:10px;
-box-shadow:0 4px 10px rgba(0,0,0,.15);
-cursor:pointer;
-transition:.2s;
-}
-
-.card img:hover{
-transform:scale(1.04);
-}
-
-.label{
-margin-top:8px;
-font-weight:bold;
-font-size:14px;
-}
-
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#f7f9fc,#eef2f7);margin:0;color:#1f2933;}
+.container{max-width:1200px;margin:auto;padding:30px 20px 50px;}
+h1{text-align:center;margin-bottom:10px;font-weight:700;}
+.subtitle{text-align:center;color:#6b7280;margin-bottom:30px;}
+.navbar{display:flex;justify-content:center;gap:10px;margin-bottom:25px;flex-wrap:wrap;}
+.navbtn{background:#2c7be5;color:white;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;box-shadow:0 2px 6px rgba(0,0,0,.15);transition:.2s;}
+.navbtn:hover{background:#1a5fc2;}
+.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:30px;}
+.search{padding:10px 14px;font-size:15px;border-radius:6px;border:1px solid #d1d5db;width:260px;}
+.favbtn{background:#111827;color:white;border:none;padding:10px 16px;border-radius:6px;font-weight:600;cursor:pointer;}
+.favbtn:hover{background:#374151;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px;}
+.card{background:white;border-radius:12px;padding:12px;box-shadow:0 6px 14px rgba(0,0,0,.12);transition:.25s;text-align:center;position:relative;}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 24px rgba(0,0,0,.18);}
+.card img{width:200px;height:350px;object-fit:cover;border-radius:8px;cursor:pointer;}
+.label{margin-top:8px;font-weight:600;font-size:14px;}
+.star{position:absolute;top:10px;right:12px;font-size:22px;cursor:pointer;color:#d1d5db;transition:.2s;}
+.star.active{color:#fbbf24;}
+.star:hover{transform:scale(1.2);}
 </style>
 </head>
-
 <body>
+
+<div class="container">
+<h1>Golf Drill Library</h1>
+<div class="subtitle">Stretching Drills</div>
 
 <div class="navbar">
 <a class="navbtn" href="index.html">Drills</a>
-<a class="navbtn" href="stretching.html">Stretching</a>
 <a class="navbtn" href="office.html">Office</a>
+<a class="navbtn" href="stretching.html">Stretching</a>
 </div>
 
-<h1>Stretching</h1>
+<div class="controls">
+<input id="search" class="search" placeholder="Search drills...">
+<button class="favbtn" onclick="showFavorites()">Favorites</button>
+</div>
 
-<div id="library"></div>
+<div id="grid" class="grid"></div>
+</div>
 
 <script>
+const drills=[
+{img:"ShoulderInjury",label:"Shoulder Injury",url:"https://www.facebook.com/share/r/1BifyXN4MN/"},
+{img:"HipStretching",label:"Hips",url:"https://www.facebook.com/share/r/17oRo2jBv8/"},
+{img:"GolfStretching3",label:"Golf Stretching 3 Stretches",url:"https://www.facebook.com/share/r/18WVcACbnN/"},
+{img:"GolfStretching10",label:"Golf Stretching 10 Minutes",url:"https://www.facebook.com/reel/3847933995513489"},
+{img:"BackStretching",label:"Back Stretching",url:"https://www.facebook.com/share/r/1BMLcSx3di/"},
+{img:"ShoulderStretching",label:"Shoulders Stretching",url:"https://www.facebook.com/share/r/15MLkySBsb/"},
+{img:"ElbowsForearms",label:"Elbows & Forearms Stretching",url:"https://www.facebook.com/share/r/1BjRCV1iaL/"},
+{img:"FullBody",label:"Full Body Stretching",url:"https://www.facebook.com/reel/1422332818882057"},
+{img:"TrapsStretching",label:"Traps Stretching",url:"https://youtube.com/shorts/uNM9bQi2LW4"},
+{img:"NeckStretching",label:"Neck Stretching",url:"https://youtube.com/shorts/VX8KKWT_lCc"},
+{img:"ShoulderBlades",label:"Shoulder Blade Stretching",url:"https://youtube.com/shorts/77Nqb7b-Ck4"},
+{img:"ShoulderMobility",label:"Shoulder Stretching",url:"https://www.facebook.com/share/r/1DKRqDPk6A/"},
+{img:"HipFlexibility",label:"Hip Flexibility",url:"https://youtube.com/shorts/nKhxWxKVzf4"},
+{img:"ShouldersStick",label:"Shoulder Stretching",url:"https://www.facebook.com/share/r/18qGUCXxJC/"},
+{img:"FrozenShoulder",label:"Frozen Shoulder Stretching",url:"https://www.facebook.com/share/r/14MX52stEma/"},
+{img:"LowerBack",label:"Lower Back Stretch",url:"https://www.facebook.com/share/r/183Bm53PmJ/"},
+{img:"EarlyExtensionStretch",label:"Early Extension Stretch",url:"https://www.facebook.com/share/r/15d9xqGnKsG/"},
+];
 
-const list = `
+let favorites=JSON.parse(localStorage.getItem("favDrills")||"[]");
+const grid=document.getElementById("grid");
 
-(ShoulderInjury) - Shoulder Injury - https://www.facebook.com/share/r/1BifyXN4MN/
-(HipStretching) - Hips - https://www.facebook.com/share/r/17oRo2jBv8/
-(GolfStretching3) - Golf Stretching 3 Stretches - https://www.facebook.com/share/r/18WVcACbnN/
-(GolfStretching10) - Golf Stretching 10 Minutes - https://www.facebook.com/reel/3847933995513489
-(BackStretching) - Back Stretching - https://www.facebook.com/share/r/1BMLcSx3di/
-(ShoulderStretching) - Shoulders Stretching - https://www.facebook.com/share/r/15MLkySBsb/
-(ElbowsForearms) - Elbows & Forearms Stretching - https://www.facebook.com/share/r/1BjRCV1iaL/
-(FullBody) - Full Body Stretching - https://www.facebook.com/reel/1422332818882057
-(TrapsStretching) - Traps Stretching - https://youtube.com/shorts/uNM9bQi2LW4
-(NeckStretching) - Neck Stretching - https://youtube.com/shorts/VX8KKWT_lCc
-(ShoulderBlades) - Shoulder Blade Stretching - https://youtube.com/shorts/77Nqb7b-Ck4
-(ShoulderMobility) - Shoulder Stretching - https://www.facebook.com/share/r/1DKRqDPk6A/
-(HipFlexibility) - Hip Flexibility - https://youtube.com/shorts/nKhxWxKVzf4
-(ShouldersStick) - Shoulder Stretching - https://www.facebook.com/share/r/18qGUCXxJC/
-(FrozenShoulder) - Frozen Shoulder Stretching - https://www.facebook.com/share/r/14MX52stEma/
-(LowerBack) - Lower Back Stretch - https://www.facebook.com/share/r/183Bm53PmJ/
-(EarlyExtensionStretch) - Early Extension Stretch - https://www.facebook.com/share/r/15d9xqGnKsG/
-
-`;
-
-const container=document.getElementById("library");
-
-const section=document.createElement("div");
-section.className="section";
-
-const heading=document.createElement("div");
-heading.className="section-title";
-heading.textContent="Stretching Library";
-
-const grid=document.createElement("div");
-grid.className="grid";
-
-section.appendChild(heading);
-section.appendChild(grid);
-container.appendChild(section);
-
-list.trim().split("\n").forEach(line=>{
-
-const match=line.match(/\((.*?)\)\s-\s(.*?)\s-\s(.*)/);
-if(!match) return;
-
-const file=match[1];
-const label=match[2];
-const url=match[3];
-
+function draw(list){
+grid.innerHTML="";
+list.forEach(d=>{
 const card=document.createElement("div");
 card.className="card";
-
-card.innerHTML=`
-<a href="${url}" target="_blank">
-<img src="${file}.png">
-</a>
-<div class="label">${label}</div>
-`;
-
+const star=document.createElement("div");
+star.className="star";
+star.innerHTML="★";
+if(favorites.includes(d.img)) star.classList.add("active");
+star.onclick=()=>toggleFav(d.img,star);
+card.innerHTML+=`<a href="${d.url}" target="_blank"><img src="${d.img}.png"></a><div class="label">${d.label}</div>`;
+card.appendChild(star);
 grid.appendChild(card);
+});
+}
 
+function toggleFav(name,star){
+if(favorites.includes(name)){
+favorites=favorites.filter(f=>f!==name);
+star.classList.remove("active");
+}else{
+favorites.push(name);
+star.classList.add("active");
+}
+localStorage.setItem("favDrills",JSON.stringify(favorites));
+}
+
+document.getElementById("search").addEventListener("input",function(){
+const term=this.value.toLowerCase();
+const filtered=drills.filter(d=>d.label.toLowerCase().includes(term));
+draw(filtered);
 });
 
-</script>
+function showFavorites(){
+const fav=drills.filter(d=>favorites.includes(d.img));
+draw(fav);
+}
 
+draw(drills);
+</script>
 </body>
 </html>
