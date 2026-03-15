@@ -2,168 +2,111 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Office Drills</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Golf Drill Library - Office</title>
 <style>
-
-body{
-font-family:Arial, sans-serif;
-background:#f4f4f4;
-margin:0;
-padding:20px;
-}
-
-/* NAVIGATION */
-
-.navbar{
-text-align:center;
-margin-bottom:25px;
-}
-
-.navbtn{
-display:inline-block;
-padding:10px 22px;
-margin:6px;
-background:#2c7be5;
-color:white;
-text-decoration:none;
-border-radius:6px;
-font-weight:bold;
-font-size:14px;
-}
-
-.navbtn:hover{
-background:#1a5fc2;
-}
-
-h1{
-text-align:center;
-margin-bottom:40px;
-}
-
-/* SECTIONS */
-
-.section{
-margin-bottom:50px;
-}
-
-.section-title{
-font-size:26px;
-border-bottom:3px solid #ddd;
-padding-bottom:8px;
-margin-bottom:20px;
-}
-
-/* GRID */
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:20px;
-}
-
-.card{
-text-align:center;
-}
-
-.card img{
-width:200px;
-height:350px;
-object-fit:cover;
-border-radius:10px;
-box-shadow:0 4px 10px rgba(0,0,0,.15);
-cursor:pointer;
-transition:.2s;
-}
-
-.card img:hover{
-transform:scale(1.04);
-}
-
-.label{
-margin-top:8px;
-font-weight:bold;
-font-size:14px;
-}
-
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#f7f9fc,#eef2f7);margin:0;color:#1f2933;}
+.container{max-width:1200px;margin:auto;padding:30px 20px 50px;}
+h1{text-align:center;margin-bottom:10px;font-weight:700;}
+.subtitle{text-align:center;color:#6b7280;margin-bottom:30px;}
+.navbar{display:flex;justify-content:center;gap:10px;margin-bottom:25px;flex-wrap:wrap;}
+.navbtn{background:#2c7be5;color:white;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;box-shadow:0 2px 6px rgba(0,0,0,.15);transition:.2s;}
+.navbtn:hover{background:#1a5fc2;}
+.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:30px;}
+.search{padding:10px 14px;font-size:15px;border-radius:6px;border:1px solid #d1d5db;width:260px;}
+.favbtn{background:#111827;color:white;border:none;padding:10px 16px;border-radius:6px;font-weight:600;cursor:pointer;}
+.favbtn:hover{background:#374151;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px;}
+.card{background:white;border-radius:12px;padding:12px;box-shadow:0 6px 14px rgba(0,0,0,.12);transition:.25s;text-align:center;position:relative;}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 24px rgba(0,0,0,.18);}
+.card img{width:200px;height:350px;object-fit:cover;border-radius:8px;cursor:pointer;}
+.label{margin-top:8px;font-weight:600;font-size:14px;}
+.star{position:absolute;top:10px;right:12px;font-size:22px;cursor:pointer;color:#d1d5db;transition:.2s;}
+.star.active{color:#fbbf24;}
+.star:hover{transform:scale(1.2);}
 </style>
 </head>
-
 <body>
+
+<div class="container">
+<h1>Golf Drill Library</h1>
+<div class="subtitle">Office Drills</div>
 
 <div class="navbar">
 <a class="navbtn" href="index.html">Drills</a>
-<a class="navbtn" href="stretching.html">Stretching</a>
 <a class="navbtn" href="office.html">Office</a>
+<a class="navbtn" href="stretching.html">Stretching</a>
 </div>
 
-<h1>Office Drills</h1>
+<div class="controls">
+<input id="search" class="search" placeholder="Search drills...">
+<button class="favbtn" onclick="showFavorites()">Favorites</button>
+</div>
 
-<div id="library"></div>
+<div id="grid" class="grid"></div>
+</div>
 
 <script>
+const drills=[
+{img:"LeftKnee",label:"Left Knee",url:"https://youtube.com/shorts/q17LA-BlIrE"},
+{img:"RotationOffice",label:"Rotation Drill",url:"https://youtube.com/shorts/9BjYi4fHB9Y"},
+{img:"SwayFix",label:"Sway Fix",url:"https://www.facebook.com/share/r/1LjfWo8PER/"},
+{img:"ShallowingExercises",label:"Shallowing",url:"https://www.facebook.com/share/r/1CeA2a6T5y/"},
+{img:"BackswingOffice",label:"Backswing",url:"https://www.facebook.com/share/r/17Fpxu57XX/"},
+{img:"BackswingPosture",label:"Backswing",url:"https://www.facebook.com/share/r/179sBZc4U2/"},
+{img:"BackswingWall",label:"Backswing",url:"https://www.facebook.com/share/r/14DzAbzTQQQ/"},
+{img:"HipMovement",label:"Hip Movement",url:"https://www.facebook.com/share/r/1DpA9WH1EK/"},
+{img:"PivotDrill",label:"Pivot Drill",url:"https://www.facebook.com/share/r/1Bs7Hz8B9S/"},
+{img:"HeadOnWall",label:"Head On Wall",url:"https://www.facebook.com/share/r/19nQ8q3FtQ/"},
+{img:"LeaningDrill",label:"Leaning Drill",url:"https://www.facebook.com/share/r/1GEe8VFekf/"},
+{img:"RightArmOffice",label:"Right Arm Drill",url:"https://www.facebook.com/share/r/1BZn76taeq/"},
+{img:"DownswingFeels",label:"Downswing Feels",url:"https://www.facebook.com/share/r/1a1XxK1S5X/"},
+{img:"SwayDrillOffice",label:"Sway Drill",url:"https://www.facebook.com/share/r/1DEFXsiXGY/"},
+{img:"CompressionOffice",label:"Compression Drill",url:"https://www.facebook.com/share/r/1KRRonHu2r/"},
+];
 
-const list = `
+let favorites=JSON.parse(localStorage.getItem("favDrills")||"[]");
+const grid=document.getElementById("grid");
 
-(LeftKnee) - Left Knee - https://youtube.com/shorts/q17LA-BlIrE
-(RotationOffice) - Rotation Drill - https://youtube.com/shorts/9BjYi4fHB9Y
-(SwayFix) - Sway Fix - https://www.facebook.com/share/r/1LjfWo8PER/
-(ShallowingExercises) - Shallowing - https://www.facebook.com/share/r/1CeA2a6T5y/
-(BackswingOffice) - Backswing - https://www.facebook.com/share/r/17Fpxu57XX/
-(BackswingPosture) - Backswing - https://www.facebook.com/share/r/179sBZc4U2/
-(BackswingWall) - Backswing - https://www.facebook.com/share/r/14DzAbzTQQQ/
-(HipMovement) - Hip Movement - https://www.facebook.com/share/r/1DpA9WH1EK/
-(PivotDrill) - Pivot Drill - https://www.facebook.com/share/r/1Bs7Hz8B9S/
-(HeadOnWall) - Head On Wall - https://www.facebook.com/share/r/19nQ8q3FtQ/
-(LeaningDrill) - Leaning Drill - https://www.facebook.com/share/r/1GEe8VFekf/
-(RightArmOffice) - Right Arm Drill - https://www.facebook.com/share/r/1BZn76taeq/
-(DownswingFeels) - Downswing Feels - https://www.facebook.com/share/r/1a1XxK1S5X/
-(SwayDrillOffice) - Sway Drill - https://www.facebook.com/share/r/1DEFXsiXGY/
-(CompressionOffice) - Compression Drill - https://www.facebook.com/share/r/1KRRonHu2r/
-
-`;
-
-const container=document.getElementById("library");
-
-const section=document.createElement("div");
-section.className="section";
-
-const heading=document.createElement("div");
-heading.className="section-title";
-heading.textContent="Office Drills";
-
-const grid=document.createElement("div");
-grid.className="grid";
-
-section.appendChild(heading);
-section.appendChild(grid);
-container.appendChild(section);
-
-list.trim().split("\n").forEach(line=>{
-
-const match=line.match(/\((.*?)\)\s-\s(.*?)\s-\s(.*)/);
-if(!match) return;
-
-const file=match[1];
-const label=match[2];
-const url=match[3];
-
+function draw(list){
+grid.innerHTML="";
+list.forEach(d=>{
 const card=document.createElement("div");
 card.className="card";
-
-card.innerHTML=`
-<a href="${url}" target="_blank">
-<img src="${file}.png">
-</a>
-<div class="label">${label}</div>
-`;
-
+const star=document.createElement("div");
+star.className="star";
+star.innerHTML="★";
+if(favorites.includes(d.img)) star.classList.add("active");
+star.onclick=()=>toggleFav(d.img,star);
+card.innerHTML+=`<a href="${d.url}" target="_blank"><img src="${d.img}.png"></a><div class="label">${d.label}</div>`;
+card.appendChild(star);
 grid.appendChild(card);
+});
+}
 
+function toggleFav(name,star){
+if(favorites.includes(name)){
+favorites=favorites.filter(f=>f!==name);
+star.classList.remove("active");
+}else{
+favorites.push(name);
+star.classList.add("active");
+}
+localStorage.setItem("favDrills",JSON.stringify(favorites));
+}
+
+document.getElementById("search").addEventListener("input",function(){
+const term=this.value.toLowerCase();
+const filtered=drills.filter(d=>d.label.toLowerCase().includes(term));
+draw(filtered);
 });
 
-</script>
+function showFavorites(){
+const fav=drills.filter(d=>favorites.includes(d.img));
+draw(fav);
+}
 
+draw(drills);
+</script>
 </body>
 </html>
