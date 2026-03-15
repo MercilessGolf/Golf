@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stretching</title>
+
+<style>
+
+body{
+font-family:Arial, sans-serif;
+background:#f4f4f4;
+margin:0;
+padding:20px;
+}
+
+/* NAVIGATION */
+
+.navbar{
+text-align:center;
+margin-bottom:25px;
+}
+
+.navbtn{
+display:inline-block;
+padding:10px 22px;
+margin:6px;
+background:#2c7be5;
+color:white;
+text-decoration:none;
+border-radius:6px;
+font-weight:bold;
+font-size:14px;
+}
+
+.navbtn:hover{
+background:#1a5fc2;
+}
+
+h1{
+text-align:center;
+margin-bottom:40px;
+}
+
+/* SECTIONS */
+
+.section{
+margin-bottom:50px;
+}
+
+.section-title{
+font-size:26px;
+border-bottom:3px solid #ddd;
+padding-bottom:8px;
+margin-bottom:20px;
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+}
+
+.card{
+text-align:center;
+}
+
+.card img{
+width:200px;
+height:350px;
+object-fit:cover;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+cursor:pointer;
+transition:.2s;
+}
+
+.card img:hover{
+transform:scale(1.04);
+}
+
+.label{
+margin-top:8px;
+font-weight:bold;
+font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+<a class="navbtn" href="index.html">Drills</a>
+<a class="navbtn" href="stretching.html">Stretching</a>
+<a class="navbtn" href="office.html">Office</a>
+</div>
+
+<h1>Stretching</h1>
+
+<div id="library"></div>
+
+<script>
+
+const list = `
+
+(ShoulderInjury) - Shoulder Injury - https://www.facebook.com/share/r/1BifyXN4MN/
+(HipStretching) - Hips - https://www.facebook.com/share/r/17oRo2jBv8/
+(GolfStretching3) - Golf Stretching 3 Stretches - https://www.facebook.com/share/r/18WVcACbnN/
+(GolfStretching10) - Golf Stretching 10 Minutes - https://www.facebook.com/reel/3847933995513489
+(BackStretching) - Back Stretching - https://www.facebook.com/share/r/1BMLcSx3di/
+(ShoulderStretching) - Shoulders Stretching - https://www.facebook.com/share/r/15MLkySBsb/
+(ElbowsForearms) - Elbows & Forearms Stretching - https://www.facebook.com/share/r/1BjRCV1iaL/
+(FullBody) - Full Body Stretching - https://www.facebook.com/reel/1422332818882057
+(TrapsStretching) - Traps Stretching - https://youtube.com/shorts/uNM9bQi2LW4
+(NeckStretching) - Neck Stretching - https://youtube.com/shorts/VX8KKWT_lCc
+(ShoulderBlades) - Shoulder Blade Stretching - https://youtube.com/shorts/77Nqb7b-Ck4
+(ShoulderMobility) - Shoulder Stretching - https://www.facebook.com/share/r/1DKRqDPk6A/
+(HipFlexibility) - Hip Flexibility - https://youtube.com/shorts/nKhxWxKVzf4
+(ShouldersStick) - Shoulder Stretching - https://www.facebook.com/share/r/18qGUCXxJC/
+(FrozenShoulder) - Frozen Shoulder Stretching - https://www.facebook.com/share/r/14MX52stEma/
+(LowerBack) - Lower Back Stretch - https://www.facebook.com/share/r/183Bm53PmJ/
+(EarlyExtensionStretch) - Early Extension Stretch - https://www.facebook.com/share/r/15d9xqGnKsG/
+
+`;
+
+const container=document.getElementById("library");
+
+const section=document.createElement("div");
+section.className="section";
+
+const heading=document.createElement("div");
+heading.className="section-title";
+heading.textContent="Stretching Library";
+
+const grid=document.createElement("div");
+grid.className="grid";
+
+section.appendChild(heading);
+section.appendChild(grid);
+container.appendChild(section);
+
+list.trim().split("\n").forEach(line=>{
+
+const match=line.match(/\((.*?)\)\s-\s(.*?)\s-\s(.*)/);
+if(!match) return;
+
+const file=match[1];
+const label=match[2];
+const url=match[3];
+
+const card=document.createElement("div");
+card.className="card";
+
+card.innerHTML=`
+<a href="${url}" target="_blank">
+<img src="${file}.png">
+</a>
+<div class="label">${label}</div>
+`;
+
+grid.appendChild(card);
+
+});
+
+</script>
+
+</body>
+</html>
