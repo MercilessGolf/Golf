@@ -24,48 +24,41 @@ margin-bottom:50px;
 }
 
 .section-title{
-font-size:24px;
+font-size:26px;
 border-bottom:3px solid #ddd;
-padding-bottom:6px;
+padding-bottom:8px;
 margin-bottom:20px;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
 gap:20px;
 }
 
-.video-card{
-background:white;
-padding:15px;
+.card{
+text-align:center;
+}
+
+.card img{
+width:200px;
+height:350px;
+object-fit:cover;
 border-radius:10px;
-box-shadow:0 4px 8px rgba(0,0,0,.1);
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+cursor:pointer;
+transition:.2s;
 }
 
-.thumb{
-width:100%;
-border-radius:8px;
-margin-bottom:10px;
+.card img:hover{
+transform:scale(1.03);
 }
 
-.video-label{
+.label{
+margin-top:8px;
 font-weight:bold;
-margin-bottom:10px;
-min-height:40px;
+font-size:14px;
 }
-
-.button{
-display:inline-block;
-padding:10px 14px;
-border-radius:6px;
-color:white;
-text-decoration:none;
-font-weight:bold;
-}
-
-.youtube{background:#ff0000;}
-.facebook{background:#1877f2;}
 
 .notes{
 background:white;
@@ -86,97 +79,95 @@ line-height:1.6;
 
 <script>
 
-const drills = `
+const list = `
 
-"New Ones"
-Coins drill - https://www.facebook.com/share/r/184eAaBe4P/
-Driver Circle - https://www.facebook.com/share/r/1Mf3CfWhdB/
-Study - https://www.facebook.com/share/r/19Y61BJVCU/
-Stretch - https://www.facebook.com/share/r/183Bm53PmJ/
-Compression - https://www.facebook.com/share/v/1WnpegqmGH/
-Early Extension Stretch - https://www.facebook.com/share/r/15d9xqGnKsG/
-Stick In Belt Loops Timing Drill - https://youtube.com/shorts/rs3F2hvJuFc
-Split hand drill - https://www.facebook.com/share/r/17KawAj72Y/
-
-"Keepers"
-Hit The Chalk Line After The Ball - https://www.facebook.com/share/r/1AF49LRv5s/
-Glove Under Bicep Drill - https://www.facebook.com/share/r/16Bhj96g4v/
-Coin Drill - https://www.facebook.com/share/r/19MbtqAXMn/
-Squeeze Elbows - https://www.facebook.com/share/r/1CVTfQwiAG/
-Step & stretch - https://www.facebook.com/share/r/1AsX6MFiHM/
-Swing thoughts for knee - https://www.facebook.com/share/r/17A17TxKa2/
-Compression Load Foot - https://www.facebook.com/share/r/18CNtqXDmu/
-Weight Shift - https://www.facebook.com/share/r/16qGJYwMzZ/
-Shoulders (Stick) - https://www.facebook.com/share/r/1BfbG992GG/
-Stick In Belt Loops Timing Drill - https://youtube.com/shorts/rs3F2hvJuFc
-Compression Feels Like - https://youtube.com/shorts/J6DSw7Z-fQs
+(GripDrill) - Grip Test - https://youtube.com/shorts/FXCRiwjWSws
+(GripAnalysis) - Grip Analysis - https://www.facebook.com/share/r/15t9f6Hbrt/
+(HeadStill) - Keep Head Still Drill - https://www.facebook.com/share/r/1H16ixiqbd/
+(WeightShift) - Weight Shift - https://www.facebook.com/share/r/1BWfWbr27A/
+(ImpactLine) - Impact Line - https://www.facebook.com/share/r/19rd2YxiLU/
+(DoorframeDriver) - Doorframe Driver - https://www.facebook.com/share/r/1CfVicRhRt/
+(StepIntoIt) - Step Into It - https://www.facebook.com/share/r/18UrLqCUyJ/
+(SwingStepDrill) - Swing Step Drill - https://www.facebook.com/share/v/1KoLfqLa2s/
+(CompressionStepDrill) - Compression Step Drill - https://www.facebook.com/share/r/1BN5YzNKsZ/
+(SlowDown) - Slow Down Swing Drill - https://youtube.com/shorts/o72qLYgj8ug
+(SquashBug) - Squash The Bug - https://www.facebook.com/reel/1878055812806888
+(EarlyExtension) - Early Extension - https://www.facebook.com/share/v/1ACeAhSnUg/
+(IronDrill) - Iron Drill - https://www.instagram.com/reel/DHjqiGmThjw/
+(Hands) - Hands - https://youtube.com/shorts/pBSMU1Og2Hc
+(ShallowClubStick) - Shallow Club (Stick) - https://www.facebook.com/share/r/16E2uBwfRm/
+(OverTheTopStick) - Over The Top (Stick) - https://www.facebook.com/share/r/1XWTD8CxPK/
+(3DrillsStick) - 3 Drills (Stick) - https://www.facebook.com/share/r/1AcLW4fm6i/
+(StrikeDrillSticks) - Strike Drill (Sticks) - https://www.facebook.com/share/r/1AGcZTJAhv/
+(WedgeDrillSticks) - Wedge Drill (Sticks) - https://www.facebook.com/share/r/12LNrHuHebu/
+(OneHandSwing) - One Hand Swing - https://youtube.com/shorts/ircfhXoBUrg
+(GeneratePower) - Generate Power Drill - https://youtube.com/shorts/lKmhCgld1W0
+(DropArms) - Drop Arms - https://www.facebook.com/share/r/16JUHTPiGX/
+(DropArmsElbow) - Drop Arms Elbow - https://youtube.com/shorts/QG0zJUPg2QI
+(TowelDrill) - Towel Drill - https://www.instagram.com/reel/DJUD6arzaub/
+(LtoLDrill) - L to L Drill - https://www.facebook.com/share/r/19xXuvJdbT/
+(SequencingDrill) - Sequencing Drill - https://www.facebook.com/share/r/1ACeph1XQ4/
+(LateRelease) - Late Release Drill - https://www.facebook.com/share/r/1FzNkygS8G/
+(FollowThrough) - Follow Through - https://www.facebook.com/share/r/17BksoZLXn/
+(RightElbow) - Right Elbow - https://www.facebook.com/share/r/15tGy4fr19/
+(PunchShotDrill) - Punch Shot Drill - https://www.facebook.com/share/v/16JZFy9RU6/
+(ChickenWing) - Chicken Wing - https://www.facebook.com/share/r/17uamcRn4T/
+(KneeDrill) - Knee Drill - https://www.facebook.com/share/r/16PbvKP9GT/
+(HingeClub) - Hinge Club - https://www.facebook.com/share/r/1846ropedK/
+(CompressionBallAhead) - Compression Ball Ahead Drill And 2 Others - https://youtu.be/RTqa5CPu5Xo?t=208
+(ChalkLine) - Hit The Chalk Line After The Ball - https://www.facebook.com/share/r/1AF49LRv5s/
+(GloveUnderBicep) - Glove Under Bicep Drill - https://www.facebook.com/share/r/16Bhj96g4v/
+(CoinDrill) - Coin Drill - https://www.facebook.com/share/r/19MbtqAXMn/
+(SqueezeElbows) - Squeeze Elbows - https://www.facebook.com/share/r/1CVTfQwiAG/
+(StepStretch) - Step & Stretch - https://www.facebook.com/share/r/1AsX6MFiHM/
+(SwingThoughts) - Swing Thoughts For Knee - https://www.facebook.com/share/r/17A17TxKa2/
+(CompressionLoadFoot) - Compression Load Foot - https://www.facebook.com/share/r/18CNtqXDmu/
+(WeightShift2) - Weight Shift - https://www.facebook.com/share/r/16qGJYwMzZ/
+(ShourldersStick) - Shoulders (Stick) - https://www.facebook.com/share/r/1BfbG992GG/
+(StickBeltLoops) - Stick In Belt Loops Timing Drill - https://youtube.com/shorts/rs3F2hvJuFc
+(CompressionFeelsLike) - Compression Feels Like - https://youtube.com/shorts/J6DSw7Z-fQs
+(CoinsDrill) - Coins Drill - https://www.facebook.com/share/r/184eAaBe4P/
+(SplitGripDrill) - Split Hand Drill - https://www.facebook.com/share/r/17KawAj72Y/
+(CompressionShaftLean) - Compression Excess Shaft Lean - https://www.facebook.com/share/v/1WnpegqmGH/
 
 `;
 
-const container = document.getElementById("library");
-
-let grid;
-
-drills.trim().split("\n").forEach(line=>{
-
-line=line.trim();
-if(!line) return;
-
-if(line.startsWith('"')){
+const container=document.getElementById("library");
 
 const section=document.createElement("div");
 section.className="section";
 
 const heading=document.createElement("div");
 heading.className="section-title";
-heading.textContent=line.replace(/"/g,"");
+heading.textContent="Drills";
 
-grid=document.createElement("div");
+const grid=document.createElement("div");
 grid.className="grid";
 
 section.appendChild(heading);
 section.appendChild(grid);
-
 container.appendChild(section);
 
-return;
-}
+list.trim().split("\n").forEach(line=>{
 
-const parts=line.split(" - ");
-if(parts.length<2) return;
+const match=line.match(/\((.*?)\)\s-\s(.*?)\s-\s(.*)/);
 
-const label=parts[0];
-const url=parts[1];
+if(!match) return;
 
-let platform="facebook";
-let buttonText="Watch on Facebook";
-let thumb="https://via.placeholder.com/400x225?text=Facebook+Video";
-
-if(url.includes("youtube")){
-
-platform="youtube";
-buttonText="Watch on YouTube";
-
-const id=url.split("/shorts/")[1].split("?")[0];
-
-thumb=`https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-
-}
+const file=match[1];
+const label=match[2];
+const url=match[3];
 
 const card=document.createElement("div");
-card.className="video-card";
+card.className="card";
 
 card.innerHTML=`
 
 <a href="${url}" target="_blank">
-<img class="thumb" src="${thumb}">
+<img src="${file}.png">
 </a>
 
-<div class="video-label">${label}</div>
-
-<a class="button ${platform}" href="${url}" target="_blank">
-${buttonText}
-</a>
+<div class="label">${label}</div>
 
 `;
 
@@ -188,21 +179,17 @@ grid.appendChild(card);
 
 <div class="section">
 
-<div class="section-title">No Links</div>
+<div class="section-title">Fix Arc</div>
 
 <div class="notes">
 
-<b>Iron swing (watch it all)</b>
-
 <ul>
 
-<li>Left shoulder on top of pec</li>
-<li>Left elbow pointing down target line more</li>
-<li>Right elbow underneath more and squeezed</li>
-<li>Right tilt with hips more forward/bumped left</li>
-<li>Keep head back behind ball</li>
-<li>Weight should finish on back left heel at follow through</li>
-<li>Club is open more</li>
+<li>Keep right arm on left elbow to hold against body so you don't pull up</li>
+
+<li>Piece of cardboard 6 inches behind ball and do one armed half shots</li>
+
+<li>Place something a club head length off left knee so you don't slide</li>
 
 </ul>
 
