@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Golf Drill Library (Test)</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f4f4;
+margin:0;
+padding:20px;
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+}
+
+/* NAVBAR */
+
+.navbar{
+text-align:center;
+margin-bottom:20px;
+}
+
+.navbtn{
+display:inline-block;
+padding:10px 20px;
+margin:5px;
+background:#2c7be5;
+color:white;
+text-decoration:none;
+border-radius:6px;
+font-weight:bold;
+}
+
+.navbtn:hover{
+background:#1a5fc2;
+}
+
+/* SEARCH + CONTROLS */
+
+.controls{
+text-align:center;
+margin-bottom:25px;
+}
+
+.search{
+padding:10px;
+width:260px;
+font-size:16px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+.random{
+padding:10px 16px;
+margin-left:10px;
+background:#27ae60;
+border:none;
+color:white;
+border-radius:6px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.random:hover{
+background:#1e8c4d;
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+}
+
+.card{
+text-align:center;
+position:relative;
+}
+
+.card img{
+width:200px;
+height:350px;
+object-fit:cover;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+cursor:pointer;
+transition:.2s;
+}
+
+.card img:hover{
+transform:scale(1.04);
+}
+
+.label{
+margin-top:8px;
+font-weight:bold;
+}
+
+/* FAVORITE STAR */
+
+.star{
+position:absolute;
+top:8px;
+right:8px;
+font-size:22px;
+cursor:pointer;
+color:white;
+text-shadow:0 0 6px rgba(0,0,0,.6);
+}
+
+.star.active{
+color:gold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+<a class="navbtn" href="index.html">Drills</a>
+<a class="navbtn" href="office.html">Office</a>
+<a class="navbtn" href="stretching.html">Stretching</a>
+</div>
+
+<h1>Golf Drill Library (Test)</h1>
+
+<div class="controls">
+<input id="search" class="search" placeholder="Search drills...">
+<button class="random" onclick="randomDrill()">Random Drill</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+
+const drills = `
+
+(GripDrill) - Grip Test - https://youtube.com/shorts/FXCRiwjWSws
+(HeadStill) - Keep Head Still Drill - https://www.facebook.com/share/r/1H16ixiqbd/
+(WeightShift) - Weight Shift - https://www.facebook.com/share/r/1BWfWbr27A/
+(SlowDown) - Slow Down Swing Drill - https://youtube.com/shorts/o72qLYgj8ug
+(SquashBug) - Squash The Bug - https://www.facebook.com/reel/1878055812806888
+(OneHandSwing) - One Hand Swing - https://youtube.com/shorts/ircfhXoBUrg
+(GeneratePower) - Generate Power Drill - https://youtube.com/shorts/lKmhCgld1W0
+(DropArms) - Drop Arms - https://www.facebook.com/share/r/16JUHTPiGX/
+(LtoLDrill) - L to L Drill - https://www.facebook.com/share/r/19xXuvJdbT/
+(SequencingDrill) - Sequencing Drill - https://www.facebook.com/share/r/1ACeph1XQ4/
+
+`;
+
+const grid=document.getElementById("grid");
+const favorites=JSON.parse(localStorage.getItem("favorites")||"[]");
+
+function build(){
+
+grid.innerHTML="";
+
+drills.trim().split("\n").forEach(line=>{
+
+const match=line.match(/\((.*?)\)\s-\s(.*?)\s-\s(.*)/);
+if(!match) return;
+
+const file=match[1];
+const label=match[2];
+const url=match[3];
+
+const card=document.createElement("div");
+card.className="card";
+card.dataset.name=label.toLowerCase();
+
+const star=document.createElement("div");
+star.className="star";
+star.innerHTML="★";
+
+if(favorites.includes(file)) star.classList.add("active");
+
+star.onclick=()=>{
+toggleFavorite(file,star);
+};
+
+card.innerHTML=`
+<a href="${url}" target="_blank">
+<img src="${file}.png">
+</a>
+<div class="label">${label}</div>
+`;
+
+card.appendChild(star);
+grid.appendChild(card);
+
+});
+
+}
+
+function toggleFavorite(name,star){
+
+let fav=JSON.parse(localStorage.getItem("favorites")||"[]");
+
+if(fav.includes(name)){
+fav=fav.filter(f=>f!==name);
+star.classList.remove("active");
+}else{
+fav.push(name);
+star.classList.add("active");
+}
+
+localStorage.setItem("favorites",JSON.stringify(fav));
+
+}
+
+document.getElementById("search").addEventListener("input",function(){
+
+const term=this.value.toLowerCase();
+
+document.querySelectorAll(".card").forEach(card=>{
+card.style.display=card.dataset.name.includes(term)?"block":"none";
+});
+
+});
+
+function randomDrill(){
+
+const cards=[...document.querySelectorAll(".card")];
+
+const r=Math.floor(Math.random()*cards.length);
+
+cards[r].scrollIntoView({behavior:"smooth",block:"center"});
+cards[r].style.transform="scale(1.1)";
+
+setTimeout(()=>{
+cards[r].style.transform="";
+},1000);
+
+}
+
+build();
+
+</script>
+
+</body>
+</html>
